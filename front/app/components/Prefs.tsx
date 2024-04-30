@@ -1,20 +1,18 @@
 import {v4 as uuidv4} from "uuid";
+import { Pref } from "./Pref";
+import React, { Dispatch, SetStateAction } from "react";
+import { SerializeFrom } from "@remix-run/node";
 
-export const Pref = (item: pref) => {
+type PrefsProps = {
+  prefs: SerializeFrom<pref>[],
+  setPrefs: Dispatch<SetStateAction<pref[]>>
+};
+export const Prefs: React.FC<PrefsProps> = ({setPrefs, prefs}) => {
   return (
-    <div>
-      <input type="checkbox" id={item.prefCode.toString()} />
-      <label htmlFor="">{item.prefName}</label>
-    </div>
-  )
-}
-
-export const Prefs = (data: pref[]) => {
-  return (
-    <div className="pref">
-      {data
-        && Object.keys(data).map((k) => <Pref key={uuidv4()} {...data[parseInt(k)]} />)
+    <form className="pref">
+      {prefs
+        && prefs.map((pref) => <Pref key={uuidv4()} {...pref} />)
       }
-    </div>
+    </form>
   )
 }

@@ -1,7 +1,7 @@
-export const Graph = () => {
-    return (
-      <>
-        <p>Graph</p>
-      </>
-    )
-  }
+export const Graph = (prefs: pref[]) => {
+  return (
+    <>
+      <p>Graph</p>
+    </>
+  )
+}

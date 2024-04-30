@@ -1,7 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { json, useLoaderData } from "@remix-run/react";
 import { Prefs } from "../components/Prefs";
 import { Graph } from "~/components/Graph";
+import React from "react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,15 +25,20 @@ export async function clientLoader()
   )
 
   const data = await res.json() as prefs
-  return data.result
+  return json(data.result)
+}
+
+export function clientAction() {
+  return json({ message: "This action was called from the client" });
 }
 
 export default function Index() {
+  const [prefs, setPrefs] = React.useState<pref[]>([])
   const data = useLoaderData<typeof clientLoader>()
   return (
     <div>
-      <Prefs {...data} />
-      <Graph />
+      <Prefs prefs={data} setPrefs={setPrefs} />
+      <Graph {...prefs} />
     </div>
   );
 }
