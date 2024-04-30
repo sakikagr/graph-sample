@@ -1,22 +1,20 @@
 import React from "react"
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.id)
-    // Cookieに保存
-    // if (e.target.checked) {
-    //   Cookies.set(e.target.id, e.target.id)
-    // } else {
-    //   Cookies.remove(e.target.id)
-    // }
+type Props = {
+  pref: pref,
+  checked: boolean,
+  onHandleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
-
-type Props = pref
-export const Pref: React.FC<Props> = (pref) => {
-  console.log(pref)
-    return (
-      <div>
-        <input type="checkbox" id={pref.prefCode.toString()} onChange={handleChange} />
-        <label htmlFor="">{pref.prefName}</label>
-      </div>
-    )
-  }
+export const Pref: React.FC<Props> = ({pref, checked, onHandleChange}) => {
+  return (
+    <div>
+      <input
+        type="checkbox"
+        id={pref.prefCode.toString()}
+        checked={checked}
+        onChange={onHandleChange}
+      />
+      <label htmlFor="">{pref.prefName}</label>
+    </div>
+  )
+}
