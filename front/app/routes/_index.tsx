@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { Suspense } from "react";
-import {v4 as uuidv4} from "uuid";
+import { Prefs } from "../components/Prefs";
+import { Graph } from "~/components/Graph";
 
 export const meta: MetaFunction = () => {
   return [
@@ -14,7 +14,7 @@ export async function clientLoader()
 {
   const res = await fetch(
     'https://opendata.resas-portal.go.jp/api/v1/prefectures',
-    { 
+    {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -27,36 +27,11 @@ export async function clientLoader()
   return data.result
 }
 
-export const Pref = (item: pref) => {
-  return (
-    <div>
-      <input type="checkbox" id={item.prefCode.toString()} />
-      <label htmlFor="">{item.prefName}</label>
-    </div>
-  )
-}
-
-export const Prefs = () => {
+export default function Index() {
   const data = useLoaderData<typeof clientLoader>()
   return (
-    <div className="pref">
-      {data && data.map((v) => <Pref key={uuidv4()} {...v} />)}
-    </div>
-  )
-}
-
-export const Graph = () => {
-  return (
-    <>
-      <p>Graph</p>
-    </>
-  )
-}
-
-export default function Index() {
-  return (
     <div>
-      <Prefs />
+      <Prefs {...data} />
       <Graph />
     </div>
   );
