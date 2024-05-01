@@ -9,6 +9,7 @@ const CustomFormGroup = styled(FormGroup)({
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
+  paddingLeft: "10px",
 });
 
 type PrefsProps = {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 type Composition = {
   label?: string
@@ -44,22 +44,30 @@ const Chart: React.FC<Props> = ({population}) => {
       return { name: n.name, ...Object.assign({}, ...data) }
     })
     setPopulationData(populationData)
-    console.log(populationData)
   }, [population])
 
   return (
     <ResponsiveContainer width={'100%'} height={400}>
+      { /** @see https://github.com/recharts/recharts/issues/3615 */}
       <LineChart data={populationData}>
-        {population.map((p) => (
+        {population.map((p, index) => (
+          // TODO: ラインの色を変更
           <Line
             key={p.prefName}
             type="monotone"
             dataKey={p.prefName}
-            stroke="#8884d8"
+            stroke={`#${index}${index}${index}`}
+            name={p.prefName}
           />
         ))}
-        <XAxis dataKey="name" />
-        <YAxis />
+        <Tooltip
+          formatter={(value) => value.toLocaleString()}
+          contentStyle={{ fontSize: 12 }}
+          // 人口の多い順にソート
+          itemSorter={(item) => (item.value as number) * -1}
+        />
+        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+        <YAxis tick={{ fontSize: 10 }} tickFormatter={(value) => value.toLocaleString()} />
       </LineChart>
     </ResponsiveContainer>
   )
@@ -100,8 +108,12 @@ export const Graph = (selectedPrefs: pref[]) => {
 
   return (
     <>
-      <p>Graph</p>
-        <Chart population={population} />
+      {
+        Object.keys(population).length === 0 && <p>都道府県を選択してください</p>
+      }
+      {
+        Object.keys(population).length > 0 && <Chart population={population} />
+      }
     </>
   )
 }
