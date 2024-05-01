@@ -1,4 +1,5 @@
 import React from "react"
+import { FormControlLabel } from "@mui/material"
 
 type Props = {
   pref: pref,
@@ -7,14 +8,18 @@ type Props = {
 }
 export const Pref: React.FC<Props> = ({pref, checked, onHandleChange}) => {
   return (
-    <div>
-      <input
-        type="checkbox"
-        id={pref.prefCode.toString()}
-        checked={checked}
-        onChange={onHandleChange}
-      />
-      <label htmlFor="">{pref.prefName}</label>
-    </div>
+    <>
+      <FormControlLabel
+        control={
+          <input
+            type="checkbox"
+            id={pref.prefCode.toString()}
+            checked={checked}
+            onChange={onHandleChange}
+          />
+        }
+        label={pref.prefName}
+      ></FormControlLabel>
+    </>
   )
 }

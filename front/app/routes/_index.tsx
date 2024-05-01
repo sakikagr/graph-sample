@@ -1,8 +1,10 @@
 import type { MetaFunction } from "@remix-run/node";
-import { ClientActionFunctionArgs, Form, json, useLoaderData } from "@remix-run/react";
+import { json, useLoaderData } from "@remix-run/react";
 import { Prefs } from "../components/Prefs";
-import { Graph } from "~/components/Graph";
+import { Graph } from "../components/Graph";
 import React from "react";
+import Grid from "@mui/material/Unstable_Grid2";
+import { Container } from "@mui/material";
 
 export const meta: MetaFunction = () => {
   return [
@@ -32,9 +34,15 @@ export default function Index() {
   const [selectedPrefs, setPrefs] = React.useState<pref[]>([])
   const data = useLoaderData<typeof clientLoader>()
   return (
-    <div>
-      <Prefs prefs={data} selectedPrefs={selectedPrefs} setPrefs={setPrefs} />
-      <Graph {...selectedPrefs} />
-    </div>
+    <Container fixed>
+      <Grid container>
+        <Grid xs={12}>
+          <Prefs prefs={data} selectedPrefs={selectedPrefs} setPrefs={setPrefs} />
+        </Grid>
+        <Grid xs={12}>
+          <Graph {...selectedPrefs} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }

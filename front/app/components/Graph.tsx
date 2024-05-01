@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Line, LineChart, XAxis, YAxis } from "recharts"
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 type Composition = {
   label?: string
@@ -48,8 +48,8 @@ const Chart: React.FC<Props> = ({population}) => {
   }, [population])
 
   return (
-    <>
-      <LineChart width={400} height={400} data={populationData}>
+    <ResponsiveContainer width={'100%'} height={400}>
+      <LineChart data={populationData}>
         {population.map((p) => (
           <Line
             key={p.prefName}
@@ -61,7 +61,7 @@ const Chart: React.FC<Props> = ({population}) => {
         <XAxis dataKey="name" />
         <YAxis />
       </LineChart>
-    </>
+    </ResponsiveContainer>
   )
 }
 export const Graph = (selectedPrefs: pref[]) => {
@@ -101,7 +101,7 @@ export const Graph = (selectedPrefs: pref[]) => {
   return (
     <>
       <p>Graph</p>
-      <Chart population={population} />
+        <Chart population={population} />
     </>
   )
 }

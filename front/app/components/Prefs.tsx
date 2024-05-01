@@ -2,7 +2,14 @@ import {v4 as uuidv4} from "uuid";
 import { Pref } from "./Pref";
 import React, { Dispatch, SetStateAction } from "react";
 import { SerializeFrom } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { FormGroup, experimentalStyled as styled } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+
+const CustomFormGroup = styled(FormGroup)({
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+});
 
 type PrefsProps = {
   prefs: SerializeFrom<pref>[],
@@ -26,15 +33,18 @@ export const Prefs: React.FC<PrefsProps> = ({setPrefs, selectedPrefs, prefs}) =>
   }
 
   return (
-    <Form className="pref">
-      {prefs
-        && prefs.map((pref) => <Pref
-          key={uuidv4()}
-          pref={pref}
-          onHandleChange={handleChange}
-          checked={selectedPrefs.some((p) => p.prefCode === pref.prefCode)}
-        />)
-      }
-    </Form>
+    <Grid>
+      <CustomFormGroup className="pref">
+        {prefs
+          && prefs.map((pref) => <Grid xs={3} key={uuidv4()}>
+            <Pref
+              pref={pref}
+              onHandleChange={handleChange}
+              checked={selectedPrefs.some((p) => p.prefCode === pref.prefCode)}
+            />
+          </Grid>)
+        }
+      </CustomFormGroup>
+    </Grid>
   )
 }
