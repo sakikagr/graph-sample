@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { json, useLoaderData } from "@remix-run/react";
 import { Prefs } from "../components/Prefs";
 import { Graph } from "../components/Graph";
-import React from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Container } from "@mui/material";
 
@@ -31,7 +31,7 @@ export async function clientLoader()
 }
 
 export default function Index() {
-  const [selectedPrefs, setPrefs] = React.useState<pref[]>([])
+  const [selectedPrefs, setPrefs] = useState<pref[]>([])
   const data = useLoaderData<typeof clientLoader>()
   return (
     <Container fixed>

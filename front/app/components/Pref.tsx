@@ -1,12 +1,7 @@
 import React from "react"
 import { FormControlLabel } from "@mui/material"
 
-type Props = {
-  pref: pref,
-  checked: boolean,
-  onHandleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
-export const Pref: React.FC<Props> = ({pref, checked, onHandleChange}) => {
+export const Pref: React.FC<PrefProps> = ({pref, checked, onHandleChange}) => {
   return (
     <>
       <FormControlLabel
